@@ -1,6 +1,8 @@
 package com.tab.AttendanceApp.serviceImp;
 
 import com.tab.AttendanceApp.entity.User;
+import com.tab.AttendanceApp.enumeration.UserRole;
+import com.tab.AttendanceApp.exception.UserExistException;
 import com.tab.AttendanceApp.repository.UserRepository;
 import com.tab.AttendanceApp.request.UserRequest;
 import com.tab.AttendanceApp.service.UserService;
@@ -30,12 +32,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean saveUser(UserRequest request) {
+    public Boolean saveUser(UserRequest request) throws UserExistException {
+
+        boolean userExisted = userRepository.existsUserByEmail(request.getEmail());
+
+        if(userExisted){
+            throw new UserExistException("user with email "+request.getEmail()+" is existed");
+        }
+
+        UserRole role = UserRole.valueOf(request.getUserRole().toUpperCase());
 
         User user = mapper.map(request, User.class);
                 user.setIsDeleted(false);
-                user.setCreatedBy(1L);
-                user.setCreatedDate(new Date());
+               // user.setCreatedBy(1L);
+               // user.setCreatedDate(new Date());
 
         User savedUser = userRepository.save(user);
 

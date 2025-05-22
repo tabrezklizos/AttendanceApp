@@ -15,10 +15,11 @@ public class User extends BaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-
     private String email;
+
+    private Boolean isActive;
+    private  Boolean isDeleted;
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole;

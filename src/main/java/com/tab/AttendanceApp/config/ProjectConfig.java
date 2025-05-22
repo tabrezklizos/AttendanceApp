@@ -12,4 +12,6 @@ public class ProjectConfig {
       return new ModelMapper();
   }
 
+    @Bean
+    public AuditConfig awareRef(){return new AuditConfig();}
 }

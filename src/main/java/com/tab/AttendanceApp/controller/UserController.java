@@ -1,8 +1,10 @@
 package com.tab.AttendanceApp.controller;
 
 import com.tab.AttendanceApp.entity.User;
+import com.tab.AttendanceApp.exception.UserExistException;
 import com.tab.AttendanceApp.request.UserRequest;
 import com.tab.AttendanceApp.service.UserService;
+import com.tab.AttendanceApp.util.Validation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +21,13 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    Validation validation;
 
     @PostMapping("/save")
-    public ResponseEntity<?> saveUser(@RequestBody UserRequest request){
+    public ResponseEntity<?> saveUser(@RequestBody UserRequest request) throws Exception {
+
+        validation.userValidation(request);
 
         Boolean saveCategory = userService.saveUser(request);
 
