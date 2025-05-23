@@ -1,5 +1,4 @@
 package com.tab.AttendanceApp.util;
-import com.tab.AttendanceApp.enumeration.UserRole;
 import com.tab.AttendanceApp.exception.ValidationException;
 import com.tab.AttendanceApp.request.UserRequest;
 import org.springframework.stereotype.Component;
@@ -21,15 +20,27 @@ public class Validation {
       }
       else{
 
-          if(ObjectUtils.isEmpty(userRequest.getName())){
-              error.put("name","name is empty or null");
+          if(ObjectUtils.isEmpty(userRequest.getFirstName())){
+              error.put("first-name","first-name is empty or null");
           }
           else{
-              if(userRequest.getName().length()<=3){
-                  error.put("name","name at least 3 char");
+              if(userRequest.getFirstName().length()<=3){
+                  error.put("first-name","first-name at least 3 char");
               }
-              if(userRequest.getName().length()>=10){
-                  error.put("name","name at most 10 char");
+              if(userRequest.getFirstName().length()>=10){
+                  error.put("first-name","first-name at most 10 char");
+              }
+          }
+
+          if(ObjectUtils.isEmpty(userRequest.getLastName())){
+              error.put("last-name","last-name is empty or null");
+          }
+          else{
+              if(userRequest.getLastName().length()<=3){
+                  error.put("last-name","last-name at least 3 char");
+              }
+              if(userRequest.getLastName().length()>=10){
+                  error.put("last-name","last-name at most 10 char");
               }
           }
 
@@ -66,14 +77,9 @@ public class Validation {
                   error.put("isActive", "isActive is INVALID");
               }
           }
-
       }
-
       if(!error.isEmpty()){
           throw new ValidationException(error);
       }
-
-
   }
-
 }

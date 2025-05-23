@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -44,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
         User user = mapper.map(request, User.class);
                 user.setIsDeleted(false);
-               // user.setCreatedBy(1L);
+                // user.setCreatedBy(1L);
                // user.setCreatedDate(new Date());
 
         User savedUser = userRepository.save(user);

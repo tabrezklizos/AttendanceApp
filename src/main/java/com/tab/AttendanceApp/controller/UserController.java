@@ -1,7 +1,6 @@
 package com.tab.AttendanceApp.controller;
 
 import com.tab.AttendanceApp.entity.User;
-import com.tab.AttendanceApp.exception.UserExistException;
 import com.tab.AttendanceApp.request.UserRequest;
 import com.tab.AttendanceApp.service.UserService;
 import com.tab.AttendanceApp.util.Validation;
