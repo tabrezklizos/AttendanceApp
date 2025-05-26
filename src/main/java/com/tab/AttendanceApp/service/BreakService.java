@@ -2,6 +2,7 @@ package com.tab.AttendanceApp.service;
 
 import com.tab.AttendanceApp.entity.Attendance;
 import com.tab.AttendanceApp.entity.BreakSession;
+import com.tab.AttendanceApp.enumeration.BreakType;
 import com.tab.AttendanceApp.repository.AttendanceRepository;
 import com.tab.AttendanceApp.repository.BreakSessionRepository;
 import com.tab.AttendanceApp.request.BreakRequest;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -48,6 +50,19 @@ public class BreakService {
         attendance.setTotalBreakDuration(totalBreak.plus(breakDuration));
 
         attendanceRepo.save(attendance);
+    }
+
+
+
+    public List<BreakSession> getBreaksByAttendanceId(Long attendanceId) {
+        return breakSessionRepo.findByAttendanceId(attendanceId);
+    }
+
+    public Duration calculateEffectiveBreaks(List<BreakSession> breaks) {
+        return breaks.stream()
+                .filter(b -> b.getBreakType() != BreakType.RESTROOM_BREAK)
+                .map(BreakSession::getBreakDuration)
+                .reduce(Duration.ZERO, Duration::plus);
     }
 
 }
